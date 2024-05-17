@@ -11,16 +11,26 @@ export default {
     }
   },
   computed: {
-    elasticity: function () {
-      if (this.p1 === null || this.p2 === null || this.q1 === null || this.q2 === null) {
-        return null; // 如果有任何一個數值為null，則彈性無法計算
+    elasticity() {
+      // 檢查是否有任何一個數值為 null 或 0，則彈性無法計算
+      if (this.p1 === null || this.p2 === null || this.q1 === null || this.q2 === null || this.p1 === 0 || this.q1 === 0) {
+        return null;
       }
+
+      // 計算彈性值的公式
       const elasticityValue = Math.abs(((this.q2 - this.q1) / this.q1) / ((this.p2 - this.p1) / this.p1));
+
+      // 根據彈性值返回不同的結果
       if (elasticityValue === 1) {
-        return "1(此時可以達到利潤極大化)";
-      } else {
-        return elasticityValue;
+        return "1 (此時可以達到利潤極大化)";
+      } else if (elasticityValue === 0) {
+        return "0 (完全無彈性)";
+      } else if (elasticityValue > 0 && elasticityValue < 1) {
+        return `${elasticityValue.toFixed(2)} (缺乏彈性)`; // 用 toFixed(2) 限制小數點後兩位
+      } else if (elasticityValue > 1) {
+        return `${elasticityValue.toFixed(2)} (富有彈性)`; // 用 toFixed(2) 限制小數點後兩位
       }
+      return elasticityValue.toFixed(2); // 返回我的答案
     }
   },
 
@@ -123,6 +133,8 @@ border-radius: 8px; will-change: transform;">
 }
 
 h1 {
+
+  margin-top: 0px;
   color: white;
   display: flex;
   justify-content: center;
@@ -142,11 +154,7 @@ h1 {
   /* 垂直捲軸 */
   line-height: 1.5rem;
   /*   增加行高 */
-  background-color: #FFF7E6;
 
-  /* display: flex;
-  flex-direction: column;
-  justify-self: start; */
 }
 .txt{
   width: 100%;
@@ -183,6 +191,7 @@ img {
   right: 0%;
   top: 800px;
   background-color: #c9d9cd;
+  margin-top: 50px;
 }
 
 input {
@@ -190,9 +199,10 @@ input {
 }
 
 .container2 {
+
   width: 50dvw;
   height: 500px;
-  z-index: -1;
+ margin-top: 77px;
 
 }
 
@@ -201,8 +211,8 @@ input {
   font-weight: bold;
   position: absolute;
   right: 75px;
-  top: 650px;
-
+  top: 723px;
+  margin-top: 50px;
 }
 
 .content {
@@ -225,6 +235,7 @@ input {
   width: 100dvw;
   height: 500px;
   display: flex;
-
+  background-color: #FFF7E6;
 }
+
 </style>
